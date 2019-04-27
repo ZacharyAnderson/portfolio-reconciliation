@@ -20,12 +20,16 @@ def format_input():
     # class for appropriate action
     for line in sys.stdin:
         if line.strip() == "D0-POS":
+            d1_trn_flag = False
+            d1_pos_flag = False
             d0_pos_flag = True
         elif line.strip() == "D1-TRN":
             d0_pos_flag = False
+            d1_pos_flag = False
             d1_trn_flag = True
         elif line.strip() == "D1-POS":
             d1_trn_flag = False
+            d0_pos_flag = False
             d1_pos_flag = True
         elif d0_pos_flag and line.strip() is not "":
             d0_pos_list.append(line.strip())
