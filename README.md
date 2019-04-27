@@ -10,6 +10,7 @@ No, assume the data format in recon.in has no errors (WYSIWYG).
  
 
 ## Test Data
+```
 recon.in
 ------------
 D0-POS
@@ -38,3 +39,4 @@ CASH 8000
 GOOG 10
 TD -100
 MSFT 10
+```
