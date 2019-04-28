@@ -14,4 +14,9 @@ class ReconTracker:
 
     def initiliaze_portfolio(self, d0_pos_list):
         for line in d0_pos_list:
-            print(line)
+            tmp = line.split()
+            if tmp[0] in self.portfolio.keys():
+                self.portfolio[tmp[0]] += tmp[1]
+            else:
+                self.portfolio[tmp[0]] = tmp[1]
+        print(self.portfolio)

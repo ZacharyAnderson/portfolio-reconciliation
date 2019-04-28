@@ -17,7 +17,7 @@ def format_input():
     d1_pos_flag = False
 
     # This for loop will format the input into 3 main lists
-    # for each main section which will we then send to our 
+    # for each main section which will we then send to our
     # class for appropriate action
     for line in sys.stdin:
         if line.strip() == "D0-POS":
@@ -43,7 +43,6 @@ def format_input():
         else:
             raise Exception("Input is formed incorrectly.")
 
-    print(d0_pos_list)
     print(d1_trn_list)
     print(d1_pos_list)
     ReconTracker(d0_pos_list)
