@@ -1,5 +1,6 @@
 """ Main file for performing Reconciliation on input file. """
 import sys
+from recon import ReconTracker
 
 
 def format_input():
@@ -45,6 +46,8 @@ def format_input():
     print(d0_pos_list)
     print(d1_trn_list)
     print(d1_pos_list)
+    ReconTracker(d0_pos_list)
+
 
 if __name__ == "__main__":
     format_input()
