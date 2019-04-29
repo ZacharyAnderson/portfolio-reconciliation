@@ -45,7 +45,6 @@ def format_input():
 
     test = ReconTracker(d0_pos_list)
     test.update_portfolio(d1_trn_list)
-    print(test.portfolio)
     test.compare_portfolio(d1_pos_list)
 
 

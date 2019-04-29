@@ -8,17 +8,24 @@ class ReconTracker:
     """
 
     def __init__(self, d0_pos_list):
-        self.portfolio = dict()
+        self.portfolio = self.create_dict(d0_pos_list)
 
-        self.initiliaze_portfolio(d0_pos_list)
-
-    def initiliaze_portfolio(self, d0_pos_list):
-        for line in d0_pos_list:
+    # def initiliaze_portfolio(self, d0_pos_list):
+    #     for line in d0_pos_list:
+    #         tmp = line.split()
+    #         if tmp[0] in self.portfolio.keys():
+    #             self.portfolio[tmp[0]] += float(tmp[1])
+    #         else:
+    #             self.portfolio[tmp[0]] = float(tmp[1])
+    def create_dict(self, input_list):
+        new_dict = dict()
+        for line in input_list:
             tmp = line.split()
-            if tmp[0] in self.portfolio.keys():
-                self.portfolio[tmp[0]] += float(tmp[1])
+            if tmp[0] in new_dict.keys():
+                new_dict[tmp[0]] += float(tmp[1])
             else:
-                self.portfolio[tmp[0]] = float(tmp[1])
+                new_dict[tmp[0]] = float(tmp[1])
+        return new_dict
 
     def update_portfolio(self, d1_trn_list):
         for line in d1_trn_list:
@@ -43,10 +50,18 @@ class ReconTracker:
                 self.portfolio["Cash"] += float(tmp[3])
 
     def compare_portfolio(self, d1_pos_list):
-        for line in d1_pos_list:
-            tmp = line.split()
-            if tmp[0] in self.portfolio.keys():
-                print(tmp)
-                print(self.portfolio[tmp[0]])
-            elif tmp[0] not in self.portfolio.keys():
-                print(tmp[0] + " " + tmp[1])
+        output_dict = self.create_dict(d1_pos_list)
+        matching_keys = self.portfolio.keys() & output_dict.keys()
+        portfolio_nonmatching_keys = self.portfolio.keys() - output_dict.keys()
+        output_nonmatching_keys = output_dict.keys() - self.portfolio.keys()
+
+        for key in matching_keys:
+            difference = output_dict[key] - self.portfolio[key]
+            if difference != float(0.0):
+                print(key + " " + str(output_dict[key] - self.portfolio[key]))
+        for key in portfolio_nonmatching_keys:
+            if self.portfolio[key] != 0.0:
+                print(key + " -" + str(self.portfolio[key]))
+        for key in output_nonmatching_keys:
+            if output_dict[key] != 0.0:
+                print(key + " " + str(output_dict[key]))
