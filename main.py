@@ -1,6 +1,6 @@
 """ Main file for performing Reconciliation on input file. """
 import sys
-from recon import ReconTracker
+from portfolio import PortfolioTracker
 
 
 def format_input():
@@ -43,7 +43,7 @@ def format_input():
         else:
             raise Exception("Input is formed incorrectly.")
 
-    test = ReconTracker(d0_pos_list)
+    test = PortfolioTracker(d0_pos_list)
     test.update_portfolio(d1_trn_list)
     test.compare_portfolio(d1_pos_list)
 
