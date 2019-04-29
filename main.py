@@ -43,9 +43,10 @@ def format_input():
         else:
             raise Exception("Input is formed incorrectly.")
 
-    print(d1_trn_list)
-    print(d1_pos_list)
-    ReconTracker(d0_pos_list)
+    test = ReconTracker(d0_pos_list)
+    test.update_portfolio(d1_trn_list)
+    print(test.portfolio)
+    test.compare_portfolio(d1_pos_list)
 
 
 if __name__ == "__main__":
