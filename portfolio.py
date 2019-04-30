@@ -6,6 +6,12 @@ class PortfolioTracker:
         between the correct portfolio of stocks and cash and
         what the bank has on record.
     """
+    _CASH = "Cash"
+    _BUY = "BUY"
+    _SELL = "SELL"
+    _FEE = "FEE"
+    _DEPOSIT = "DEPOSIT"
+    _DIVIDEND = "DIVIDEND"
 
     def __init__(self, d0_pos_list):
         self.portfolio = self.create_dict(d0_pos_list)
@@ -28,8 +34,8 @@ class PortfolioTracker:
                 new_dict[transaction[0]] += float(transaction[1])
             else:
                 new_dict[transaction[0]] = float(transaction[1])
-        if "Cash" not in new_dict.keys():
-            new_dict["Cash"] = float(0)
+        if self._CASH not in new_dict.keys():
+            new_dict[self._CASH] = float(0)
         return new_dict
 
     def update_portfolio(self, d1_trn_list):
@@ -41,25 +47,26 @@ class PortfolioTracker:
         """
         for line in d1_trn_list:
             transaction = line.split()
-            if transaction[1] == "BUY":
+            if transaction[1] == self._BUY:
                 if transaction[0] in self.portfolio.keys():
                     self.portfolio[transaction[0]] += float(transaction[2])
-                    self.portfolio["Cash"] -= float(transaction[3])
+                    self.portfolio[self._CASH] -= float(transaction[3])
                 else:
                     self.portfolio[transaction[0]] = float(transaction[2])
-                    self.portfolio["Cash"] -= float(transaction[3])
-            elif transaction[1] == "SELL":
+                    self.portfolio[self._CASH] -= float(transaction[3])
+            elif transaction[1] == self._SELL:
                 if transaction[0] in self.portfolio.keys():
                     self.portfolio[transaction[0]] -= float(transaction[2])
-                    self.portfolio["Cash"] += float(transaction[3])
+                    self.portfolio[self._CASH] += float(transaction[3])
                 else:
                     self.portfolio[transaction[0]] =\
                         (float(transaction[2]) * -1)
-                    self.portfolio["Cash"] += float(transaction[3])
-            elif transaction[1] == "FEE":
-                self.portfolio["Cash"] -= float(transaction[3])
-            elif transaction[1] == "DEPOSIT" or transaction[1] == "DIVIDEND":
-                self.portfolio["Cash"] += float(transaction[3])
+                    self.portfolio[self._CASH] += float(transaction[3])
+            elif transaction[1] == self._FEE:
+                self.portfolio[self._CASH] -= float(transaction[3])
+            elif transaction[1] == self._DEPOSIT or\
+                    transaction[1] == self._DIVIDEND:
+                self.portfolio[self._CASH] += float(transaction[3])
             else:
                 raise Exception("recon.in is formatted incorrectly.")
 

@@ -2,6 +2,10 @@
 import sys
 from portfolio import PortfolioTracker
 
+D0_POS = "D0-POS"
+D1_TRN = "D1-TRN"
+D1_POS = "D1-POS"
+
 
 def reconciliation():
     """
@@ -20,15 +24,15 @@ def reconciliation():
     # for each main section which will we then send to our
     # class for appropriate action
     for line in sys.stdin:
-        if line.strip() == "D0-POS":
+        if line.strip() == D0_POS:
             d1_trn_flag = False
             d1_pos_flag = False
             d0_pos_flag = True
-        elif line.strip() == "D1-TRN":
+        elif line.strip() == D1_TRN:
             d0_pos_flag = False
             d1_pos_flag = False
             d1_trn_flag = True
-        elif line.strip() == "D1-POS":
+        elif line.strip() == D1_POS:
             d1_trn_flag = False
             d0_pos_flag = False
             d1_pos_flag = True
