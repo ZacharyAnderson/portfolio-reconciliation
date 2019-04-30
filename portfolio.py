@@ -54,7 +54,7 @@ class PortfolioTracker:
                     self.portfolio["Cash"] += float(transaction[3])
                 else:
                     self.portfolio[transaction[0]] =\
-                             (float(transaction[2]) * -1)
+                        (float(transaction[2]) * -1)
                     self.portfolio["Cash"] += float(transaction[3])
             elif transaction[1] == "FEE":
                 self.portfolio["Cash"] -= float(transaction[3])
