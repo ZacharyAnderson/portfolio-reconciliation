@@ -10,39 +10,65 @@ class PortfolioTracker:
     def __init__(self, d0_pos_list):
         self.portfolio = self.create_dict(d0_pos_list)
 
+    def __repr__(self):
+        return repr(self.portfolio)
+
     def create_dict(self, input_list):
+        """
+            Creates a dictionary for use with our portfolio.
+            Also is used to compare both our portfolio and
+            d1-pos data. If "Cash" is not a key in the input
+            then we will add that as we will need that key-value
+            pair for our update_portfolio function.
+        """
         new_dict = dict()
         for line in input_list:
-            tmp = line.split()
-            if tmp[0] in new_dict.keys():
-                new_dict[tmp[0]] += float(tmp[1])
+            transaction = line.split()
+            if transaction[0] in new_dict.keys():
+                new_dict[transaction[0]] += float(transaction[1])
             else:
-                new_dict[tmp[0]] = float(tmp[1])
+                new_dict[transaction[0]] = float(transaction[1])
+        if "Cash" not in new_dict.keys():
+            new_dict["Cash"] = float(0)
         return new_dict
 
     def update_portfolio(self, d1_trn_list):
+        """
+            Takes d1-trn data and updates our existing
+            portfolio to have all correct metrics for d0
+            and d1 of transactions. If input list is formatted
+            incorrectly will raise an Exception error.
+        """
         for line in d1_trn_list:
-            tmp = line.split()
-            if tmp[1] == "BUY":
-                if tmp[0] in self.portfolio.keys():
-                    self.portfolio[tmp[0]] += float(tmp[2])
-                    self.portfolio["Cash"] -= float(tmp[3])
+            transaction = line.split()
+            if transaction[1] == "BUY":
+                if transaction[0] in self.portfolio.keys():
+                    self.portfolio[transaction[0]] += float(transaction[2])
+                    self.portfolio["Cash"] -= float(transaction[3])
                 else:
-                    self.portfolio[tmp[0]] = float(tmp[2])
-                    self.portfolio["Cash"] -= float(tmp[3])
-            elif tmp[1] == "SELL":
-                if tmp[0] in self.portfolio.keys():
-                    self.portfolio[tmp[0]] -= float(tmp[2])
-                    self.portfolio["Cash"] += float(tmp[3])
+                    self.portfolio[transaction[0]] = float(transaction[2])
+                    self.portfolio["Cash"] -= float(transaction[3])
+            elif transaction[1] == "SELL":
+                if transaction[0] in self.portfolio.keys():
+                    self.portfolio[transaction[0]] -= float(transaction[2])
+                    self.portfolio["Cash"] += float(transaction[3])
                 else:
-                    self.portfolio[tmp[0]] = (float(tmp[2]) * -1)
-                    self.portfolio["Cash"] += float(tmp[3])
-            elif tmp[1] == "FEE":
-                self.portfolio["Cash"] -= float(tmp[3])
-            elif tmp[1] == "DEPOSIT" or tmp[1] == "DIVIDEND":
-                self.portfolio["Cash"] += float(tmp[3])
+                    self.portfolio[transaction[0]] =\
+                             (float(transaction[2]) * -1)
+                    self.portfolio["Cash"] += float(transaction[3])
+            elif transaction[1] == "FEE":
+                self.portfolio["Cash"] -= float(transaction[3])
+            elif transaction[1] == "DEPOSIT" or transaction[1] == "DIVIDEND":
+                self.portfolio["Cash"] += float(transaction[3])
+            else:
+                raise Exception("recon.in is formatted incorrectly.")
 
     def compare_portfolio(self, d1_pos_list):
+        """
+            Takes d1-pos and compares it against our portfolio.
+            After the compariso we print the correct difference
+            listed from d1-pos and our portfolio.
+        """
         output_dict = self.create_dict(d1_pos_list)
         matching_keys = self.portfolio.keys() & output_dict.keys()
         portfolio_nonmatching_keys = self.portfolio.keys() - output_dict.keys()
@@ -61,6 +87,10 @@ class PortfolioTracker:
                 print(key + " " + str(self.format_decimal(output_dict[key])))
 
     def format_decimal(self, num):
+        """
+            formats our float or int variable to return
+            a number with the correct amount of trailing 0's.
+        """
         if num % 1 == 0:
             return int(num)
         else:

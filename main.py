@@ -3,9 +3,9 @@ import sys
 from portfolio import PortfolioTracker
 
 
-def format_input():
+def reconciliation():
     """
-        format_input takes sys.stdin() and will format all three sections of
+        reconciliation takes sys.stdin() and will format all three sections of
         input D0-POS, D1-TRN, and D1-POS into the correct data
         structures for processing.
     """
@@ -43,10 +43,10 @@ def format_input():
         else:
             raise Exception("Input is formed incorrectly.")
 
-    test = PortfolioTracker(d0_pos_list)
-    test.update_portfolio(d1_trn_list)
-    test.compare_portfolio(d1_pos_list)
+    portfolio = PortfolioTracker(d0_pos_list)
+    portfolio.update_portfolio(d1_trn_list)
+    portfolio.compare_portfolio(d1_pos_list)
 
 
 if __name__ == "__main__":
-    format_input()
+    reconciliation()
