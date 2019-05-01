@@ -24,25 +24,26 @@ def reconciliation():
     # for each main section which will we then send to our
     # class for appropriate action
     for line in sys.stdin:
-        if line.strip() == D0_POS:
+        line = line.strip()
+        if line == D0_POS:
             d1_trn_flag = False
             d1_pos_flag = False
             d0_pos_flag = True
-        elif line.strip() == D1_TRN:
+        elif line == D1_TRN:
             d0_pos_flag = False
             d1_pos_flag = False
             d1_trn_flag = True
-        elif line.strip() == D1_POS:
+        elif line == D1_POS:
             d1_trn_flag = False
             d0_pos_flag = False
             d1_pos_flag = True
-        elif d0_pos_flag and line.strip() is not "":
-            d0_pos_list.append(line.strip())
-        elif d1_trn_flag and line.strip() is not "":
-            d1_trn_list.append(line.strip())
-        elif d1_pos_flag and line.strip() is not "":
-            d1_pos_list.append(line.strip())
-        elif line.strip() == "":
+        elif d0_pos_flag and line is not "":
+            d0_pos_list.append(line)
+        elif d1_trn_flag and line is not "":
+            d1_trn_list.append(line)
+        elif d1_pos_flag and line is not "":
+            d1_pos_list.append(line)
+        elif line == "":
             continue
         else:
             raise Exception("Input is formed incorrectly.")
